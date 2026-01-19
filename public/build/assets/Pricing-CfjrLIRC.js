@@ -1,0 +1,1 @@
+import{_ as t}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c as o,e as s,d as c}from"./app-E0SyKMCT.js";const r={},n={class:"container-custom py-8"};function a(i,e){return c(),o("div",n,[...e[0]||(e[0]=[s("h1",{class:"text-3xl font-bold"},"الأسعار",-1)])])}const f=t(r,[["render",a]]);export{f as default};
