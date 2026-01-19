@@ -49,10 +49,10 @@ composer require --dev laravel/pint pestphp/pest pestphp/pest-plugin-laravel
 APP_NAME="Khattit Marketing Platform"
 APP_ENV=local
 APP_DEBUG=true
-APP_URL=http://localhost
+APP_URL=http://localhost/learn
 
 DB_CONNECTION=mysql
-DB_DATABASE=khattit_marketing
+DB_DATABASE=khattit
 DB_USERNAME=root
 DB_PASSWORD=
 
