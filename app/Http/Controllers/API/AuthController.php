@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,28 +17,12 @@ class AuthController extends Controller
     /**
      * تسجيل مستخدم جديد
      */
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'phone' => 'nullable|string|max:20',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'errors' => $validator->errors(),
-            ], 422);
-        }
-
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'phone' => $request->phone,
-            'role' => 'user',
             'subscription_tier' => 'free',
             'ai_credits_remaining' => 3,
             'ai_credits_reset_at' => now()->addMonth(),
@@ -46,7 +32,7 @@ class AuthController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'تم التسجيل بنجاح',
+            'message' => 'تم إنشاء الحساب بنجاح',
             'data' => [
                 'user' => $user,
                 'token' => $token,
@@ -55,33 +41,18 @@ class AuthController extends Controller
         ], 201);
     }
 
-    /**
-     * تسجيل الدخول
-     */
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        $user = User::where('email', $request->email)->first();
 
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'errors' => $validator->errors(),
-            ], 422);
-        }
-
-        if (!Auth::attempt($request->only('email', 'password'))) {
+        if (! $user || ! Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
-                'email' => ['البيانات المدخلة غير صحيحة'],
+                'email' => ['بيانات الدخول غير صحيحة.'],
             ]);
         }
 
-        $user = User::where('email', $request->email)->firstOrFail();
-
         $user->update(['last_login_at' => now()]);
-
+        
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
