@@ -16,6 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => \App\Http\Middleware\IsAdmin::class,
             'advertiser' => \App\Http\Middleware\IsAdvertiser::class,
         ]);
+        
+        // Rate Limiting للـ API
+        $middleware->throttleApi('api');
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

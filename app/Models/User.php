@@ -147,4 +147,58 @@ class User extends Authenticatable
         return $query->where('subscription_tier', '!=', 'free')
             ->where('subscription_expires_at', '>', now());
     }
+
+    // Teams & Agency Relationships
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class, 'team_members')
+            ->withPivot('role')
+            ->withTimestamps();
+    }
+
+    public function ownedTeams()
+    {
+        return $this->hasMany(Team::class, 'owner_id');
+    }
+
+    public function currentTeam()
+    {
+        return $this->belongsTo(Team::class, 'current_team_id');
+    }
+
+    public function agencyClients()
+    {
+        return $this->hasMany(AgencyClient::class, 'agency_id');
+    }
+
+    public function campaigns()
+    {
+        return $this->hasMany(Campaign::class);
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'assignee_id');
+    }
+
+    public function calendarEvents()
+    {
+        return $this->hasMany(CalendarEvent::class);
+    }
+
+    public function isTeamOwner(Team $team): bool
+    {
+        return $this->id === $team->owner_id;
+    }
+
+    public function isTeamAdmin(Team $team): bool
+    {
+        $member = $this->teams()->where('team_id', $team->id)->first();
+        return $member && in_array($member->pivot->role, ['owner', 'admin']);
+    }
+
+    public function isAgency(): bool
+    {
+        return $this->role === 'agency';
+    }
 }

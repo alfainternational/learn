@@ -60,6 +60,130 @@ const routes = [
                 name: 'templates',
                 component: () => import('@/views/Templates/Index.vue'),
                 meta: { title: 'مكتبة القوالب' }
+            },
+            {
+                path: '/learn',
+                name: 'courses.index',
+                component: () => import('@/views/Courses/Index.vue'),
+                meta: { title: 'الدورات التعليمية' }
+            },
+            {
+                path: '/learn/lessons/:id',
+                name: 'lessons.show',
+                component: () => import('@/views/Lessons/Show.vue'),
+                meta: { title: 'الدرس' }
+            },
+            {
+                path: '/learn/quizzes/:id',
+                name: 'quizzes.take',
+                component: () => import('@/views/Quizzes/Take.vue'),
+                meta: { title: 'الاختبار' }
+            },
+            {
+                path: '/learn/quizzes/:id/results/:attemptId',
+                name: 'quizzes.results',
+                component: () => import('@/views/Quizzes/Results.vue'),
+                meta: { title: 'نتائج الاختبار' }
+            },
+            {
+                path: '/progress',
+                name: 'progress.dashboard',
+                component: () => import('@/views/Progress/Dashboard.vue'),
+                meta: { title: 'تقدمي' }
+            },
+            {
+                path: '/certificates/:number',
+                name: 'certificates.show',
+                component: () => import('@/views/Certificates/Show.vue'),
+                meta: { title: 'الشهادة' }
+            },
+            {
+                path: '/campaigns',
+                name: 'campaigns.index',
+                component: () => import('@/views/Campaigns/Index.vue'),
+                meta: { title: 'تحليل الحملات' }
+            },
+            {
+                path: '/campaigns/create',
+                name: 'campaigns.create',
+                component: () => import('@/views/Campaigns/Create.vue'),
+                meta: { title: 'إنشاء حملة' }
+            },
+            {
+                path: '/campaigns/:id',
+                name: 'campaigns.show',
+                component: () => import('@/views/Campaigns/Show.vue'),
+                meta: { title: 'تفاصيل الحملة' }
+            },
+            {
+                path: '/campaigns/:id/analysis',
+                name: 'campaigns.analysis',
+                component: () => import('@/views/Campaigns/Analysis.vue'),
+                meta: { title: 'تحليل الحملة' }
+            },
+            // Tasks
+            {
+                path: '/tasks',
+                name: 'tasks.board',
+                component: () => import('@/views/Tasks/Board.vue'),
+                meta: { title: 'لوحة المهام' }
+            },
+            {
+                path: '/tasks/list',
+                name: 'tasks.list',
+                component: () => import('@/views/Tasks/List.vue'),
+                meta: { title: 'قائمة المهام' }
+            },
+            {
+                path: '/tasks/:id',
+                name: 'tasks.show',
+                component: () => import('@/views/Tasks/Show.vue'),
+                meta: { title: 'تفاصيل المهمة' }
+            },
+            // Calendar
+            {
+                path: '/calendar',
+                name: 'calendar.index',
+                component: () => import('@/views/Calendar/Index.vue'),
+                meta: { title: 'التقويم' }
+            },
+            // Analytics
+            {
+                path: '/analytics',
+                name: 'analytics.dashboard',
+                component: () => import('@/views/Analytics/Dashboard.vue'),
+                meta: { title: 'التحليلات' }
+            },
+            {
+                path: '/analytics/compare',
+                name: 'analytics.compare',
+                component: () => import('@/views/Analytics/Compare.vue'),
+                meta: { title: 'مقارنة الحملات' }
+            },
+            {
+                path: '/analytics/reports',
+                name: 'analytics.reports',
+                component: () => import('@/views/Analytics/Reports.vue'),
+                meta: { title: 'التقارير' }
+            },
+            // Teams
+            {
+                path: '/teams',
+                name: 'teams.index',
+                component: () => import('@/views/Teams/Index.vue'),
+                meta: { title: 'الفرق' }
+            },
+            {
+                path: '/teams/:id',
+                name: 'teams.show',
+                component: () => import('@/views/Teams/Show.vue'),
+                meta: { title: 'تفاصيل الفريق' }
+            },
+            {
+                path: '/teams/invitations',
+                name: 'teams.invitations',
+                component: () => import('@/views/Teams/Invitations.vue'),
+                meta: { title: 'الدعوات' }
             }
         ]
     },

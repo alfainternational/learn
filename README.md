@@ -1,66 +1,171 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<div dir="rtl">
+
+# خطِّط - منصة التخطيط التسويقي الذكية
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="https://img.shields.io/badge/Laravel-11.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel">
+  <img src="https://img.shields.io/badge/Vue.js-3.x-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white" alt="Vue.js">
+  <img src="https://img.shields.io/badge/Tailwind-3.x-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind">
+  <img src="https://img.shields.io/badge/Gemini-AI-4285F4?style=for-the-badge&logo=google&logoColor=white" alt="Gemini AI">
 </p>
 
-## About Laravel
+## 📋 وصف المشروع
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**خطِّط** هي منصة متكاملة لإنشاء وإدارة خطط التسويق باستخدام الذكاء الاصطناعي. تساعد المسوقين وأصحاب الأعمال على بناء استراتيجيات تسويقية احترافية بسهولة.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## ✨ المميزات
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 🤖 الذكاء الاصطناعي
+- مستشار ذكي للتسويق مدعوم بـ Google Gemini
+- اقتراحات ذكية للجمهور المستهدف
+- تحليل المنافسين
+- توليد خطط المحتوى
+- تحسين الرسائل التسويقية
 
-## Learning Laravel
+### 📝 إدارة الخطط
+- إنشاء خطط تسويقية شاملة
+- قوالب جاهزة للاستخدام
+- تصدير بصيغ PDF, Excel, DOCX
+- مشاركة الخطط مع الآخرين
+- أرشفة ونسخ الخطط
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 📚 نظام الدورات التعليمية
+- دورات تعلم التسويق
+- دروس تفاعلية
+- اختبارات تقييمية
+- شهادات إتمام
+- أدوات تسويقية تفاعلية
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 💼 نظام الاشتراكات
+- خطط اشتراك متعددة
+- إدارة الرصيد والمعاملات
+- نظام إشعارات متكامل
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 👨‍💼 لوحة الإدارة
+- إدارة المستخدمين
+- إدارة الحملات الإعلانية
+- إعدادات النظام
 
-## Laravel Sponsors
+## 🛠 التقنيات المستخدمة
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+| التقنية | الإصدار | الاستخدام |
+|---------|---------|-----------|
+| Laravel | 11.x | Backend Framework |
+| Vue.js | 3.x | Frontend Framework |
+| Tailwind CSS | 3.x | Styling |
+| Vite | 5.x | Build Tool |
+| SQLite/MySQL | - | Database |
+| Laravel Sanctum | - | API Authentication |
+| Google Gemini | - | AI Services |
 
-### Premium Partners
+## 📦 خطوات التثبيت
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### المتطلبات
+- PHP >= 8.2
+- Composer
+- Node.js >= 18
+- npm أو yarn
 
-## Contributing
+### التثبيت السريع
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+# استنساخ المشروع
+git clone <repository-url>
+cd learn
 
-## Code of Conduct
+# تثبيت المكتبات
+composer install
+npm install
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# إعداد البيئة
+cp .env.example .env
+php artisan key:generate
 
-## Security Vulnerabilities
+# إعداد قاعدة البيانات
+touch database/database.sqlite
+php artisan migrate --seed
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# تشغيل المشروع
+php artisan serve
+npm run dev
+```
 
-## License
+> للتفاصيل الكاملة، راجع [docs/INSTALLATION.md](docs/INSTALLATION.md)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## ⚙️ الإعدادات
+
+### ملف .env
+```env
+# التطبيق
+APP_NAME=خطط
+APP_URL=http://localhost:8000
+
+# قاعدة البيانات
+DB_CONNECTION=sqlite
+
+# Gemini AI
+GEMINI_API_KEY=your-api-key
+```
+
+### إعداد Gemini API
+1. انتقل إلى [Google AI Studio](https://aistudio.google.com/)
+2. أنشئ مفتاح API جديد
+3. أضفه في ملف `.env`
+
+## 🔗 API Endpoints
+
+### المصادقة (Public)
+| Method | Endpoint | الوصف |
+|--------|----------|-------|
+| POST | `/api/v1/register` | تسجيل مستخدم جديد |
+| POST | `/api/v1/login` | تسجيل الدخول |
+
+### الخطط التسويقية (Protected)
+| Method | Endpoint | الوصف |
+|--------|----------|-------|
+| GET | `/api/v1/plans` | جلب جميع الخطط |
+| POST | `/api/v1/plans` | إنشاء خطة جديدة |
+| GET | `/api/v1/plans/{id}` | عرض خطة محددة |
+| PUT | `/api/v1/plans/{id}` | تحديث خطة |
+| DELETE | `/api/v1/plans/{id}` | حذف خطة |
+
+### الذكاء الاصطناعي (Protected)
+| Method | Endpoint | الوصف |
+|--------|----------|-------|
+| POST | `/api/v1/ai/chat` | محادثة مع المستشار |
+| POST | `/api/v1/ai/suggestions` | اقتراحات ذكية |
+| POST | `/api/v1/ai/analyze` | تحليل المحتوى |
+| GET | `/api/v1/ai/credits` | رصيد الاستخدام |
+
+> للتوثيق الكامل لـ API، راجع [docs/API.md](docs/API.md)
+
+## 📁 هيكل المشروع
+
+```
+learn/
+├── app/
+│   ├── Http/Controllers/API/    # متحكمات API
+│   ├── Models/                  # نماذج قاعدة البيانات
+│   └── Services/                # خدمات (AI, Export, Payment)
+├── resources/js/
+│   ├── components/              # مكونات Vue
+│   ├── views/                   # صفحات التطبيق
+│   └── router/                  # توجيهات Vue Router
+├── routes/
+│   └── api.php                  # مسارات API
+└── docs/                        # التوثيق
+```
+
+## 🔐 الأدوار والصلاحيات
+
+| الدور | الصلاحيات |
+|-------|----------|
+| user | إنشاء الخطط، استخدام AI، الدورات |
+| advertiser | إدارة الحملات الإعلانية |
+| admin | الوصول الكامل للوحة التحكم |
+
+## 📄 الترخيص
+
+هذا المشروع مرخص تحت رخصة MIT.
+
+</div>

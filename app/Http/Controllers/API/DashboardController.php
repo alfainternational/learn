@@ -16,15 +16,11 @@ class DashboardController extends Controller
         // Calculate stats
         $plansCount = $user->marketingPlans()->count();
         
-        // Calculate average completion
-        $plans = $user->marketingPlans()->get();
+        // Calculate average completion with eager loading
+        $plans = $user->marketingPlans()->with('sections')->get();
         $totalCompletion = 0;
         foreach ($plans as $plan) {
-            // Check if percentage accessor exists, otherwise calculate manually
-            // Assuming accessor 'completion_percentage' exists on model or we assume is_completed count
-            // Let's use basic logic for now if accessor not guaranteed: 
-            // Count completed sections / Total sections (12)
-            $completedSections = $plan->sections()->where('is_completed', true)->count();
+            $completedSections = $plan->sections->where('is_completed', true)->count();
             $percentage = ($completedSections / 12) * 100;
             $totalCompletion += $percentage;
         }
@@ -39,13 +35,14 @@ class DashboardController extends Controller
                     'ai_credits' => $user->ai_credits_remaining, // Assuming this field exists
                     'subscription_tier' => $user->subscription_tier,
                 ],
-                // Return top 5 recent plans
+                // Return top 5 recent plans with eager loading
                 'recent_plans' => $user->marketingPlans()
+                    ->with('sections')
                     ->latest()
                     ->limit(5)
                     ->get()
                     ->map(function($plan) {
-                        $completedSections = $plan->sections()->where('is_completed', true)->count();
+                        $completedSections = $plan->sections->where('is_completed', true)->count();
                         $percentage = round(($completedSections / 12) * 100);
                         $plan->completion_percentage = $percentage;
                         return $plan;

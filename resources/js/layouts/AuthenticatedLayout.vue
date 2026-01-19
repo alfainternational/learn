@@ -1,45 +1,100 @@
 <template>
   <div class="flex h-screen bg-gray-100 font-sans" dir="rtl">
     <!-- Sidebar -->
-    <aside :class="['bg-slate-900 text-white w-64 flex-shrink-0 transition-all duration-300 ease-in-out z-30', isOpen ? 'translate-x-0' : 'translate-x-full fixed inset-y-0 right-0 md:relative md:translate-x-0']">
+    <aside :class="['bg-slate-900 text-white w-64 flex-shrink-0 transition-all duration-300 ease-in-out z-30 flex flex-col', isOpen ? 'translate-x-0' : 'translate-x-full fixed inset-y-0 right-0 md:relative md:translate-x-0']">
+      <!-- Logo -->
       <div class="h-16 flex items-center justify-center border-b border-gray-800">
         <router-link to="/dashboard" class="flex items-center gap-2">
-            <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center">
-                <span class="text-white font-bold text-xl">خ</span>
-            </div>
-            <span class="text-xl font-display font-bold">خطّط</span>
+          <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center">
+            <span class="text-white font-bold text-xl">خ</span>
+          </div>
+          <span class="text-xl font-display font-bold">خطّط</span>
         </router-link>
       </div>
 
-      <nav class="p-4 space-y-2">
-        <router-link v-for="item in navigation" :key="item.name" :to="item.to" 
-          :class="[
-            'flex items-center gap-3 px-4 py-3 rounded-xl transition-colors group',
-            isActiveRoute(item.to) ? 'bg-primary-600 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white'
-          ]">
-          <component :is="item.icon" class="w-5 h-5 group-hover:scale-110 transition-transform" />
-          <span class="font-medium">{{ item.name }}</span>
-        </router-link>
+      <!-- Navigation -->
+      <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
+        <!-- Main Navigation -->
+        <div class="space-y-1">
+          <router-link v-for="item in mainNavigation" :key="item.name" :to="item.to" 
+            :class="[
+              'flex items-center gap-3 px-4 py-3 rounded-xl transition-colors group',
+              isActiveRoute(item.to) ? 'bg-primary-600 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white'
+            ]">
+            <component :is="item.icon" class="w-5 h-5 group-hover:scale-110 transition-transform" />
+            <span class="font-medium">{{ item.name }}</span>
+            <span v-if="item.badge" class="mr-auto bg-secondary-500 text-white text-xs px-2 py-0.5 rounded-full">{{ item.badge }}</span>
+          </router-link>
+        </div>
+
+        <!-- Learn Section -->
+        <div class="pt-4 mt-4 border-t border-gray-800">
+          <div class="px-4 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center gap-2">
+            <AcademicCapIcon class="w-4 h-4" />
+            تعلّم
+          </div>
+          <div class="space-y-1 mt-2">
+            <router-link v-for="item in learnNavigation" :key="item.name" :to="item.to" 
+              :class="[
+                'flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors group',
+                isActiveRoute(item.to) ? 'bg-secondary-600 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white'
+              ]">
+              <component :is="item.icon" class="w-5 h-5 group-hover:scale-110 transition-transform" />
+              <span class="font-medium text-sm">{{ item.name }}</span>
+            </router-link>
+          </div>
+        </div>
+
+        <!-- Admin Navigation -->
+        <div v-if="isAdmin" class="pt-4 mt-4 border-t border-gray-800">
+          <div class="px-4 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center gap-2">
+            <CogIcon class="w-4 h-4" />
+            الإدارة
+          </div>
+          <div class="space-y-1 mt-2">
+            <router-link v-for="item in adminNavigation" :key="item.name" :to="item.to" 
+              :class="[
+                'flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors group',
+                isActiveRoute(item.to) ? 'bg-red-600 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white'
+              ]">
+              <component :is="item.icon" class="w-5 h-5 group-hover:scale-110 transition-transform" />
+              <span class="font-medium text-sm">{{ item.name }}</span>
+            </router-link>
+          </div>
+        </div>
       </nav>
 
+      <!-- Progress Indicator -->
+      <div class="p-4 border-t border-gray-800">
+        <div class="bg-gray-800 rounded-xl p-3">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs text-gray-400">تقدم الدورة</span>
+            <span class="text-xs font-bold text-secondary-400">{{ courseProgress }}%</span>
+          </div>
+          <div class="w-full bg-gray-700 rounded-full h-1.5">
+            <div class="bg-gradient-to-r from-secondary-500 to-primary-500 h-1.5 rounded-full transition-all duration-500" :style="{ width: courseProgress + '%' }"></div>
+          </div>
+        </div>
+      </div>
+
       <!-- User Info Footer -->
-      <div class="absolute bottom-0 w-full p-4 border-t border-gray-800">
+      <div class="p-4 border-t border-gray-800">
         <div class="flex items-center gap-3">
-           <router-link to="/profile" class="flex items-center gap-3 flex-1 min-w-0 hover:opacity-80 transition-opacity">
-              <div class="w-10 h-10 rounded-full bg-gray-700 overflow-hidden">
-                <img v-if="user?.avatar_url" :src="user.avatar_url" class="w-full h-full object-cover">
-                <div v-else class="w-full h-full flex items-center justify-center text-sm font-bold">
-                   {{ userInitials }}
-                </div>
+          <router-link to="/profile" class="flex items-center gap-3 flex-1 min-w-0 hover:opacity-80 transition-opacity">
+            <div class="w-10 h-10 rounded-full bg-gray-700 overflow-hidden">
+              <img v-if="user?.avatar_url" :src="user.avatar_url" class="w-full h-full object-cover">
+              <div v-else class="w-full h-full flex items-center justify-center text-sm font-bold">
+                {{ userInitials }}
               </div>
-              <div class="flex-1 min-w-0">
-                <p class="text-sm font-medium text-white truncate">{{ user?.name }}</p>
-                <p class="text-xs text-gray-500 truncate">تعديل الملف الشخصي</p>
-              </div>
-           </router-link>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-medium text-white truncate">{{ user?.name }}</p>
+              <p class="text-xs text-gray-500 truncate">تعديل الملف الشخصي</p>
+            </div>
+          </router-link>
           
           <button @click="logout" class="text-gray-400 hover:text-red-400 p-2" title="تسجيل الخروج">
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+            <ArrowRightOnRectangleIcon class="w-5 h-5" />
           </button>
         </div>
       </div>
@@ -53,7 +108,7 @@
       <!-- Top Header -->
       <header class="bg-white border-b border-gray-200 h-16 flex items-center justify-between px-6 z-10">
         <button @click="isOpen = !isOpen" class="md:hidden text-gray-500 hover:text-gray-700">
-          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+          <Bars3Icon class="w-6 h-6" />
         </button>
         
         <h1 class="text-xl font-bold text-gray-800 hidden md:block">{{ currentRouteName }}</h1>
@@ -61,27 +116,27 @@
         <div class="flex items-center gap-4">
           <!-- Create Button -->
           <router-link to="/plans/create" class="btn btn-primary btn-sm flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+            <PlusIcon class="w-4 h-4" />
             <span class="hidden sm:inline">خطة جديدة</span>
           </router-link>
           
           <!-- Notifications -->
           <router-link to="/notifications" class="relative p-2 text-gray-400 hover:text-gray-600 transition-colors">
-             <span v-if="unreadCount > 0" class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
-             <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
+            <span v-if="unreadCount > 0" class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
+            <BellIcon class="w-6 h-6" />
           </router-link>
           
-          <!-- User Dropdown (Simplified) -->
+          <!-- User Dropdown -->
           <div class="relative ml-3">
-             <router-link to="/profile" class="flex items-center gap-2 text-sm text-gray-700 hover:text-primary-600">
-               <span class="hidden sm:inline font-medium">{{ user?.name }}</span>
-               <div class="w-8 h-8 rounded-full bg-gray-200 overflow-hidden">
-                  <img v-if="user?.avatar_url" :src="user.avatar_url" class="w-full h-full object-cover">
-                  <div v-else class="w-full h-full flex items-center justify-center bg-primary-100 text-primary-700 font-bold">
-                    {{ userInitials }}
-                  </div>
-               </div>
-             </router-link>
+            <router-link to="/profile" class="flex items-center gap-2 text-sm text-gray-700 hover:text-primary-600">
+              <span class="hidden sm:inline font-medium">{{ user?.name }}</span>
+              <div class="w-8 h-8 rounded-full bg-gray-200 overflow-hidden">
+                <img v-if="user?.avatar_url" :src="user.avatar_url" class="w-full h-full object-cover">
+                <div v-else class="w-full h-full flex items-center justify-center bg-primary-100 text-primary-700 font-bold">
+                  {{ userInitials }}
+                </div>
+              </div>
+            </router-link>
           </div>
         </div>
       </header>
@@ -103,13 +158,11 @@ import { ref, computed } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import { useRouter, useRoute } from 'vue-router';
 import { 
-  HomeIcon, 
-  DocumentTextIcon, 
-  DocumentDuplicateIcon, 
-  CreditCardIcon, 
-  ChartBarIcon,
-  UsersIcon,
-  MegaphoneIcon
+  HomeIcon, DocumentTextIcon, DocumentDuplicateIcon, CreditCardIcon,
+  ChartBarIcon, UsersIcon, MegaphoneIcon, AcademicCapIcon, BookOpenIcon,
+  WrenchScrewdriverIcon, TrophyIcon, PlusIcon, BellIcon, CogIcon,
+  Bars3Icon, ArrowRightOnRectangleIcon, RocketLaunchIcon, ClipboardDocumentListIcon,
+  CalendarDaysIcon, PresentationChartLineIcon, UserGroupIcon
 } from '@heroicons/vue/24/outline';
 
 const authStore = useAuthStore();
@@ -118,49 +171,49 @@ const route = useRoute();
 const isOpen = ref(false);
 
 const user = computed(() => authStore.user);
+const isAdmin = computed(() => user.value?.role === 'admin');
 const userInitials = computed(() => {
   if (!user.value?.name) return 'U';
   return user.value.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
 });
 
-// Mock or Fetch unread count, usually from a Notification Store
 const unreadCount = ref(0);
+const courseProgress = ref(35);
 
 const currentRouteName = computed(() => route.meta.title || '');
 
-// Helper to determine active route
 const isActiveRoute = (path) => {
-  // Exact match for dashboard
-  if (path === '/dashboard') {
-    return route.path === '/dashboard';
-  }
-  // For other routes, check if current path starts with the nav item path
+  if (path === '/dashboard') return route.path === '/dashboard';
   return route.path.startsWith(path);
 };
 
-const navigation = computed(() => {
-  const nav = [
-    { name: 'لوحة التحكم', to: '/dashboard', icon: HomeIcon },
-    { name: 'خططي', to: '/plans', icon: DocumentTextIcon },
-    { name: 'القوالب', to: '/templates', icon: DocumentDuplicateIcon },
-    { name: 'الاشتراك', to: '/subscription', icon: CreditCardIcon },
-  ];
+const mainNavigation = [
+  { name: 'لوحة التحكم', to: '/dashboard', icon: HomeIcon },
+  { name: 'خططي', to: '/plans', icon: DocumentTextIcon },
+  { name: 'الحملات', to: '/campaigns', icon: RocketLaunchIcon },
+  { name: 'المهام', to: '/tasks', icon: ClipboardDocumentListIcon },
+  { name: 'التقويم', to: '/calendar', icon: CalendarDaysIcon },
+  { name: 'التحليلات', to: '/analytics', icon: PresentationChartLineIcon },
+  { name: 'الفرق', to: '/teams', icon: UserGroupIcon },
+  { name: 'القوالب', to: '/templates', icon: DocumentDuplicateIcon },
+  { name: 'الاشتراك', to: '/subscription', icon: CreditCardIcon },
+];
 
-  if (user.value?.role === 'admin') {
-      // Add Admin Links
-      nav.unshift({ name: 'لوحة المشرف', to: '/admin/dashboard', icon: ChartBarIcon });
-      nav.push(
-          { name: 'المستخدمين', to: '/admin/users', icon: UsersIcon },
-          { name: 'الإعلانات', to: '/admin/campaigns', icon: MegaphoneIcon }
-      );
-  }
+const learnNavigation = [
+  { name: 'الدورات', to: '/learn/courses', icon: BookOpenIcon },
+  { name: 'الأدوات', to: '/learn/tools', icon: WrenchScrewdriverIcon },
+  { name: 'الشهادات', to: '/learn/certificates', icon: TrophyIcon },
+];
 
-  return nav;
-});
+const adminNavigation = [
+  { name: 'لوحة المشرف', to: '/admin/dashboard', icon: ChartBarIcon },
+  { name: 'المستخدمين', to: '/admin/users', icon: UsersIcon },
+  { name: 'الإعلانات', to: '/admin/campaigns', icon: MegaphoneIcon },
+];
 
 const logout = async () => {
-    await authStore.logout();
-    router.push('/login');
+  await authStore.logout();
+  router.push('/login');
 };
 </script>
 

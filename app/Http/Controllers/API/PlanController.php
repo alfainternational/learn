@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Plan\CreatePlanRequest;
 use App\Models\MarketingPlan;
+use App\Services\LessonPlanIntegration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -175,10 +176,24 @@ class PlanController extends Controller
     }
 
     protected $exportService;
+    protected $lessonPlanIntegration;
 
-    public function __construct(\App\Services\Export\ExportService $exportService)
-    {
+    public function __construct(
+        \App\Services\Export\ExportService $exportService,
+        LessonPlanIntegration $lessonPlanIntegration
+    ) {
         $this->exportService = $exportService;
+        $this->lessonPlanIntegration = $lessonPlanIntegration;
+    }
+
+    public function getSuggestedLessons(MarketingPlan $plan, string $sectionType)
+    {
+        $this->authorize('view', $plan);
+
+        return response()->json([
+            'success' => true,
+            'data' => $this->lessonPlanIntegration->getSectionIntegration($sectionType),
+        ]);
     }
 
     public function exportPdf(MarketingPlan $plan) 
