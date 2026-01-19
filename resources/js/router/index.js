@@ -60,12 +60,6 @@ const routes = [
                 name: 'templates',
                 component: () => import('@/views/Templates/Index.vue'),
                 meta: { title: 'مكتبة القوالب' }
-            },
-            {
-                path: '/subscription',
-                name: 'subscription',
-                component: () => import('@/views/Subscription/Index.vue'),
-                meta: { title: 'الاشتراك' }
             }
         ]
     },

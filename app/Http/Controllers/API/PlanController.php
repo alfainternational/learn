@@ -109,7 +109,7 @@ class PlanController extends Controller
         $section = $plan->sections()->where('section_type', $sectionType)->firstOrFail();
 
         $section->update([
-            'content' => $request->input('content'),
+            'section_data' => $request->input('section_data'),
             'is_completed' => $request->boolean('is_completed'),
         ]);
 
